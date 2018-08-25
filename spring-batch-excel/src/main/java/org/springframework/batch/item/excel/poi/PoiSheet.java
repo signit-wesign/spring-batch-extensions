@@ -38,8 +38,9 @@ public class PoiSheet implements Sheet {
     private final int numberOfRows;
     private final String name;
 
-    private int numberOfColumns = -1;
+    //private int numberOfColumns = -1;
     private FormulaEvaluator evaluator;
+    private volatile int rowNumber;
 
     /**
      * Constructor which takes the delegate sheet.
@@ -74,13 +75,14 @@ public class PoiSheet implements Sheet {
      */
     @Override
     public String[] getRow(final int rowNumber) {
+        this.rowNumber = rowNumber;
         final Row row = this.delegate.getRow(rowNumber);
         if (row == null) {
             return null;
         }
         final List<String> cells = new LinkedList<String>();
-
-        for (int i = 0; i < getNumberOfColumns(); i++) {
+        int len = getNumberOfColumns();
+        for (int i = 0; i < len; i++) {
             Cell cell = row.getCell(i);
             switch (cell.getCellType()) {
                 case Cell.CELL_TYPE_NUMERIC:
@@ -120,9 +122,10 @@ public class PoiSheet implements Sheet {
      */
     @Override
     public int getNumberOfColumns() {
-        if (numberOfColumns < 0) {
-            numberOfColumns = this.delegate.getRow(0).getLastCellNum();
-        }
-        return numberOfColumns;
+//        if (numberOfColumns < 0) {
+//            numberOfColumns = this.delegate.getRow(rowNumber).getLastCellNum();
+//        }
+//        return numberOfColumns;
+        return this.delegate.getRow(rowNumber).getLastCellNum();
     }
 }
