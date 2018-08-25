@@ -22,7 +22,18 @@
 
     <groupId>org.springframework.batch</groupId>
     <artifactId>spring-batch-excel</artifactId>
-    <version>0.5.0-SNAPSHOT</version>
+    <version>0.5.0.RELEASE</version>
+	<!-- 自定义发布:本地私有化仓库(发布仓库+快照仓库) -->
+	<distributionManagement>
+		<repository>
+			<id>signit-releases</id>
+			<url>http://mvn.ns.me/nexus/content/repositories/signit-releases</url>
+		</repository>
+		<snapshotRepository>
+			<id>signit-snapshots</id>
+			<url>http://mvn.ns.me/nexus/content/repositories/signit-snapshots</url>
+		</snapshotRepository>
+	</distributionManagement>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
